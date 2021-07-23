@@ -17,7 +17,7 @@ jobs:
 
       - run: npm install
 
-      - run: npm run build-book
+      - run: node book-build.js
 
       - uses: stefanzweifel/git-auto-commit-action@v4.7.2
         with:
