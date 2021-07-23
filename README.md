@@ -93,19 +93,17 @@ The schedule is roughly as follows:
   * python: turtle
 * Week 8
   * HTML: love match
-  * python: text trivia game
+  * python: make text tic tac toe game
+  * python: make trivia game
 * Week 9
-  * python: super basic python
+  * python: pygame and pgzero
 * Week 10
-  * python: turtle
+  * python: pygame and pgzero
 * Week 11
   * python: make text tic tac toe game
 * Week 12
   * python: pygame
   * python: turtle
-
-> We are at week 12 at the moment, I will keep updating the book as we go further.
-
 * Week 13
   * python: pygame
   * python: turtle
@@ -127,7 +125,10 @@ The schedule is roughly as follows:
   * python: turtle keyboard input
 * Week 18
   * python: turtle tic tac toe
-
+* Week 19
+  * ...
+  * ...
+  * ...
 
 In most of the weeks you also go back, waaay back, every day you re-iterate variables and for loops, print the numbers from one to 10 forever, ask how many times to be printed, etc.
 
@@ -3178,4 +3179,1729 @@ But one more reason to be sus of people using your computer. Not only they can s
 Touch typing day is finally here! Enjoy keybr.com!
 
 
+
+# Chapter 8 - Week 8
+
+```
+day0: Basics of Basics
+day1: Basics of Basics
+day2: Basics of Basics
+day3: Basics of Basics
+day4: Basics of Basics
+day5: Basics of Basics
+day6: Basics of Basics
+```
+
+
+## [DAY-55] Basics of Basics
+
+Tic Tac Toe
+
+```
+def empty_game():
+    game = [
+      [' ','a','b','c','d'],
+      ['1','-','-','-','-'],
+      ['2','-','-','-','-'],
+      ['3','-','-','-','-'],
+      ['4','-','-','-','-']
+    ]
+    return game
+
+def show_game(game):
+    for row in game:
+        #[' ','a','b','c','d']
+        #...
+        for col in row:
+            #' '
+            #'a'
+            #'b'
+            print (col, end=' ')
+        print('')
+
+
+g = empty_game()
+x_or_zero='x'
+while True:
+    show_game(g)
+    p = input('place ' + x_or_zero + ': ')
+
+    if p == 'a1':
+        g[1][1]=x_or_zero
+    if p == 'a2':
+        g[2][1]=x_or_zero
+    if p == 'a3':
+        g[3][1]=x_or_zero
+    if p == 'a4':
+        g[4][1]=x_or_zero
+
+    if p == 'b1':
+        g[1][2]=x_or_zero
+    if p == 'b2':
+        g[2][2]=x_or_zero
+    if p == 'b3':
+        g[3][2]=x_or_zero
+    if p == 'b4':
+        g[4][2]=x_or_zero
+
+    if p == 'c1':
+        g[1][3]=x_or_zero
+    if p == 'c2':
+        g[2][3]=x_or_zero
+    if p == 'c3':
+        g[3][3]=x_or_zero
+    if p == 'c4':               
+        g[4][3]=x_or_zero
+
+    if p == 'd1':
+        g[1][4]=x_or_zero    
+    if p == 'd2':
+        g[2][4]=x_or_zero
+    if p == 'd3':
+        g[3][4]=x_or_zero
+    if p == 'd4':
+        g[4][4]=x_or_zero
+
+
+    if p == 'clear':
+        g = empty_game()
+
+        
+    if x_or_zero =='x':
+        x_or_zero = '0'
+    else:
+        x_or_zero='x'
+
+```
+
+Spend the rest of the day playing.
+
+## [DAY-56] Basics of Basics
+
+Trivia game
+
+```
+def check(question, answer):
+    x = input(question + ": ")
+    if x == answer:
+        return True
+    else:
+        return False
+
+
+score = 0
+if check("which animal lives on the north pole?", "polar bear"):
+    score += 1
+if check("which animal lives in the jungle?", "tiger"):
+    score += 1
+
+print("your score is: " + str(score))
+```
+
+Math test:
+
+```
+import random
+
+while True:
+    a = random.randint(1,10)
+    b = random.randint(1,10)
+
+    r = int(input("what is " + str(a) + " * " + str(b) + "? " ))
+
+    if r == a * b:
+        print("Correct!")
+    else:
+        print("Incorrect, the answer was: " + str(a * b))
+```
+
+Random characters
+
+```
+import random
+
+while True:
+    x = random.randint(ord('a'), ord('z'))
+    print(chr(x))
+```
+
+
+## [DAY-57] Basics of Basics
+
+Snake
+
+```
+import random
+APPLE_SYMBOL = '@'
+
+def render(world):
+  for row in world:
+    for col in row:
+      print(col,end=' ')
+    print('')
+
+def empty():
+  return  [
+  ['-','-','-','-'],
+  ['-','-','-','-'],
+  ['-','-','-','-'],
+  ['-','-','-','-'],
+  ['-','-','-','-'],
+  ['-','-','-','-'],
+  ['-','-','-','-'],
+]
+
+def snake_eats_itself(positions, current_col, current_row):
+    for (col,row) in positions:
+        if col == current_col and row == current_row:
+            return True
+
+def place_apple(world):
+    # just place it on a random square from all possible squares
+    possible = []
+    for index_row in range(len(world)):
+        for index_col in range(len(world[index_row])):
+            if world[index_row][index_col] == '-':
+                possible.append((index_col,index_row))
+
+    if len(possible) == 0:
+        # we cant place an apple
+        return False
+    else:
+        (col,row) = random.choice(possible)
+        world[row][col] = APPLE_SYMBOL
+        return True
+    
+world = empty()
+player_row = 0
+player_col = 0
+player_history = []
+
+world[player_row][player_col] = '%'
+player_history.append((player_col,player_row))
+
+
+place_apple(world)
+render(world)
+
+
+while True:
+  direction = input("which direction: ")
+  
+  world[player_row][player_col] = '='
+  if direction == "u":
+    player_row = player_row - 1
+  elif direction == "d":
+    player_row = player_row + 1
+  elif direction == "l":
+    player_col = player_col - 1
+  elif direction == "r":
+    player_col = player_col + 1
+  else:
+      print("try again, u for up/d for down/l for left/r for right")
+      continue
+  if snake_eats_itself(player_history, player_col, player_row):
+      print("GAME OVER")
+      break
+
+  if world[player_row][player_col] == APPLE_SYMBOL:
+
+      world[player_row][player_col] = '$'
+      if not place_apple(world):
+          print("YOU WON!")
+          break
+  else:
+      world[player_row][player_col] = '%'
+
+  player_history.append((player_col,player_row))
+
+  render(world)
+
+```
+
+## [DAY-58] Basics of Basics
+
+Keep working on the snake game if you are not done. if you are do touch typing
+
+## [DAY-59] Basics of Basics
+
+Tuples are kind of like lists that you cant grow or shrink, but also you usually assign meaning to each of the positions, for example
+
+```
+position = (1,2)
+
+(x,y) = position
+print(x)
+print(y)
+```
+
+it can have more elements
+
+```
+posittion = (1,2,3)
+(width,depth,height) = position
+
+print(width)
+print(depth)
+print(height)
+```
+
+You see how we used it in the snake game, to make a list of tuples, where we had the player history.
+
+```
+positions = [(1,2),(3,4),(5,6)]
+print(positions)
+for p in positions:
+    print(p)
+    (x,y) = p
+    print(x)
+    print(y)
+```
+
+It is quite handy when you know you have pairs of data, like X and Y position or Season number and Episode number.
+
+```
+favorite_miraculous = [(3,1),(3,2),(2,1)]
+
+for m in favorite_miraculous:
+    (season,episode) = m
+    print(str(season) + " season episode: " + str(episode))
+```
+
+Or more than 2 pieces, you can hold however many you want, but it usually is you that assign meaning to each position, like in the above case, the first element we decide is season, and the second one we decide is episode
+
+## [DAY-60] Basics of Basics
+
+Back to the beginning.
+
+* Write a program to make a spy name
+* Write a program to ask for favorite food
+* Write a program to ask what is your name forever
+
+
+# Chapter 9 - Week 9
+
+```
+day0: pygame and pgzero
+day1: Basics of Basics
+day2: Basics of Basics
+day3: Basics of Basics
+day4: Basics of Basics
+day5: Basics of Basics
+day6: Basics of Basics
+```
+
+
+## [DAY-61] pygame and pgzero
+
+open `cmd` and run:
+
+```
+pip install pygame
+pip install pgzrun
+```
+
+then make a circle
+
+```
+import pgzrun
+WIDTH = 400
+HEIGHT = 400
+ 
+def draw():
+    screen.clear()
+    x = WIDTH/2
+    y = WIDTH/2
+    pos = (x,y)
+    radius = 30
+    screen.draw.circle(pos, radius, 'white')
+ 
+pgzrun.go()
+```
+
+Now lets move it:
+
+```
+import pgzrun
+import random
+
+WIDTH = 400
+HEIGHT = 400
+
+x = WIDTH/2
+y = WIDTH/2
+
+def on_mouse_down(pos):
+    global x,y
+    (mouse_x, mouse_y) = pos
+
+    x = mouse_x
+    y = mouse_y
+
+
+def draw():
+    screen.clear()
+    pos = (x,y)
+    radius = 30
+    screen.draw.circle(pos, radius, 'white')
+ 
+pgzrun.go()
+```
+
+Move it with keyboard
+
+```
+import pgzrun
+import random
+
+WIDTH = 400
+HEIGHT = 400
+STEP = 10
+x = WIDTH/2
+y = WIDTH/2
+
+
+def on_key_down(key):
+    global x,y
+    if key == keys.LEFT:
+        x -= STEP
+    elif key == keys.RIGHT:
+        x += STEP
+    elif key == keys.UP:
+        # coordinates start 0,0 on the upper left corner
+        y -= STEP
+    elif key == keys.DOWN:
+        y += STEP
+
+def draw():
+    screen.clear()
+    pos = (x,y)
+    radius = 30
+    screen.draw.circle(pos, radius, 'white')
+ 
+pgzrun.go()
+```
+
+Lets say we have 400 width and 300 height window
+
+```
+(0,0)
+  +---------------------------+
+  |                           |
+  |                           |
+  |                           |
+  |                           |
+  |                           |
+  |                           |
+  +---------------------------+
+                          (400, 300)
+```
+
+top left corner is y = 0 and x = 0, bottom right is `x = 400` and `y = 300`. So when we move 'UP' with the keyboard we actually have to decrease `y` instead of increasing it like in `turtle`, where 0,0 is in the center of the screen, so top left is `(-half_x, -half_y)` and bottom right is `(half_x, half_y)`
+
+## [DAY-62] Basics of Basics
+
+
+Smooth movement.
+
+```
+import pgzrun
+import random
+
+WIDTH = 400
+HEIGHT = 400
+STEP = 10
+x = WIDTH/2
+y = WIDTH/2
+
+
+def update():
+    global x,y
+    if keyboard.LEFT:
+        x -= STEP
+    elif keyboard.RIGHT:
+        x += STEP
+    elif keyboard.UP:
+        y -= STEP
+    elif keyboard.DOWN:
+        y += STEP
+
+def draw():
+    screen.clear()
+    pos = (x,y)
+    radius = 30
+    screen.draw.circle(pos, radius, 'white')
+ 
+pgzrun.go()
+```
+
+`pgzero` will call your `update` function 60 times per second, and now it will just check at the time of the call, is `keyboard.UP`, and if it is it will just move. Which is completely different, where each time you press the `up` key the `on_key_down` function is called. So previously you had ot press the key every time to move, now you can just hold it.
+
+Where do those `keyboard` and `screen` magic variables come from? In python there is such thing as `__builtin__` which literally adds new keywords, kind of like `input` or `print`, when you `import pgzrun` it will import also those builtins. `Actor`, `Rect`, `keyboard` etc.. you can check them at https://pygame-zero.readthedocs.io/en/stable/builtins.html
+
+COLLIDE!
+
+![game-62.png](./screenshots/game-62.png "game 62 screenshot")
+
+
+```
+import pgzrun
+import random
+
+WIDTH = 400
+HEIGHT = 400
+STEP = 10
+x = WIDTH/2
+y = WIDTH/2
+
+box = Rect((20,20),(100,100))
+
+game_over = False
+
+
+def update():
+    global x, y, game_over
+    if keyboard.LEFT:
+        x -= STEP
+    elif keyboard.RIGHT:
+        x += STEP
+    elif keyboard.UP:
+        y -= STEP
+    elif keyboard.DOWN:
+        y += STEP
+
+    if box.collidepoint((x,y)):
+        game_over = True
+
+def draw():
+    screen.clear()
+    pos = (x,y)
+    radius = 30
+    screen.draw.rect(box, color="red")
+    screen.draw.circle(pos, radius, 'white')
+
+    if game_over:
+        screen.draw.text("GAME OVER", (50, 30), color="blue")
+ 
+pgzrun.go()
+
+```
+
+## [DAY-63] Basics of Basics
+
+Catch the snake
+
+![game-63.png](./screenshots/game-63.png "game 63 screenshot")
+
+Make images/ folder and download the images from https://github.com/jackdoe/programming-for-kids. When you say `Actor("c1")` it will look for `c1.png` in images/ folder in the current directory.
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+score = 0
+speed = 1
+elf = Actor("c1")
+snake = Actor("snake")
+elf.x = WIDTH/2
+elf.y = HEIGHT/2
+def place_snake():
+    snake.x = random.randint(10,WIDTH-10)
+    snake.y = random.randint(10,HEIGHT-10)
+
+place_snake()
+
+def update():
+    global game_over, speed, score
+    if keyboard.left:
+        elf.x = elf.x-speed
+    if keyboard.right:
+        elf.x = elf.x+speed
+    if keyboard.up:
+        elf.y = elf.y-speed
+    if keyboard.down:
+        elf.y= elf.y+speed
+    if keyboard.R:
+        speed = 1
+        score = 0
+
+    if elf.colliderect(snake):
+        score += 1
+        speed += 1
+        place_snake()
+
+def draw():
+    screen.fill('black')
+    elf.draw()
+    snake.draw()
+
+    screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))                         
+pgzrun.go()
+
+```
+
+
+## [DAY-64] Basics of Basics
+
+Many Snakes
+
+![game-64.png](./screenshots/game-64.png "game 64 screenshot")
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+score = 1
+speed = 1
+elf = Actor("c1")
+snakes = []
+elf.x = WIDTH/2
+elf.y = HEIGHT/2
+def place_snakes():
+    global snakes
+    snakes = []
+    for i in range(score):
+        snake = Actor("snake")
+        snake.x = random.randint(10,WIDTH-10)
+        snake.y = random.randint(10,HEIGHT-10)
+        snakes.append(snake)
+
+place_snakes()
+
+def update():
+    global game_over, speed, score, snakes
+    if keyboard.left:
+        elf.x = elf.x-speed
+    if keyboard.right:
+        elf.x = elf.x+speed
+    if keyboard.up:
+        elf.y = elf.y-speed
+    if keyboard.down:
+        elf.y= elf.y+speed
+    if keyboard.R:
+        speed = 1
+        score = 0
+        snakes = []
+        place_snakes()
+    for s in snakes:
+        if elf.colliderect(s):
+            score += 1
+            speed += 1
+            place_snakes()
+
+def draw():
+    screen.fill('black')
+    elf.draw()
+    for s in snakes:
+        s.draw()
+
+    screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))                         
+pgzrun.go()
+```
+## [DAY-65] Basics of Basics
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+score = 0
+speed = 1
+game_over = False
+elf = Actor("c1")
+snake = Actor("snake")
+elf.x = WIDTH/2
+elf.y = HEIGHT/2
+def place_snake():
+    snake.x = random.randint(10,WIDTH-10)
+    snake.y = random.randint(10,HEIGHT-10)
+
+place_snake()
+
+def update():
+    global game_over, speed, score
+    if keyboard.left:
+        elf.x = elf.x-speed
+    if keyboard.right:
+        elf.x = elf.x+speed
+    if keyboard.up:
+        elf.y = elf.y-speed
+    if keyboard.down:
+        elf.y= elf.y+speed
+    if keyboard.R:
+        speed = 1
+        score = 0
+
+    if elf.colliderect(snake):
+        score += 1
+        speed += 1
+        place_snake()
+
+def draw():
+    screen.fill('black')
+    elf.draw()
+    snake.draw()
+
+    screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))                         
+pgzrun.go()
+
+```
+
+
+## [DAY-66] Basics of Basics
+
+Catch as many snakes as you can in 5 seconds.
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+game_over = False
+score = 0
+speed = 1
+elf = Actor("c1")
+snake = Actor("snake")
+elf.x = WIDTH/2
+elf.y = HEIGHT/2
+def place_snake():
+    snake.x = random.randint(10,WIDTH-10)
+    snake.y = random.randint(10,HEIGHT-10)
+
+place_snake()
+
+def time_is_up():
+    global game_over
+    game_over = True
+
+def update():
+    global game_over, speed, score
+    if keyboard.left:
+        elf.x = elf.x-speed
+    if keyboard.right:
+        elf.x = elf.x+speed
+    if keyboard.up:
+        elf.y = elf.y-speed
+    if keyboard.down:
+        elf.y= elf.y+speed
+    if keyboard.R:
+        speed = 1
+        score = 0
+
+    if elf.colliderect(snake):
+        score += 1
+        speed += 1
+        place_snake()
+
+def draw():
+    screen.fill('black')
+    elf.draw()
+    snake.draw()
+
+    screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))
+
+    if game_over:
+        screen.fill('blue')
+        screen.draw.text("GAME OVER, Score: "+ str(score), color="white", topleft=(10,10))
+
+clock.schedule(time_is_up, 5)
+pgzrun.go()
+```
+
+
+You see we just overwrite the screen with 'blue' and write another text, but you can still move in the back and the score will update if you catch a sneak.
+
+If you want to stop the hero to move outside of the window, simply restrict elf.x and elf.y to be smaller than 0 or bigger than WIDTH and HEIGHT
+
+Example:
+
+
+```
+def update():
+    ...
+    if keyboard.left:
+        elf.x = elf.x-speed
+        if elf.x > WIDTH:
+            elf.x = WIDTH
+
+```
+
+## [DAY-67] Basics of Basics
+
+Cross the road. Work with your parent to find images for the game, you need few cars, fox and a door. If not just use the existing assets from your images/ folder
+
+```
+import pgzrun
+import random
+
+HEIGHT = 1000
+WIDTH = 1200
+
+score = 0
+step = 5
+coin_speed = 1
+fox = Actor("fox")
+gate = Actor("door")
+gate.y = HEIGHT - 50
+gate.x = WIDTH/2 - 20
+cars=[
+    [Actor("car-2"),Actor("car-5"),Actor("car-3")],
+    [Actor("car-1"),Actor("car-5")],
+    [Actor("car-3"),Actor("car-4"),Actor("car-2")],
+]
+
+for a in cars:
+    for (coin_index,f) in enumerate(a):
+        f.x += coin_index * int(WIDTH/len(a)) + 30
+def move_coins():
+    for (index,a) in enumerate(cars):
+        for (coin_index, f) in enumerate(a):
+           
+            f.y = (index * int(HEIGHT/len(cars))) + int(HEIGHT/len(cars))/2
+            f.x += coin_speed
+            if f.x > WIDTH:
+                f.x = 0
+
+game_over = False
+move_coins()
+
+def update():
+    global score
+    global step
+    global game_over
+    global coin_speed
+    if keyboard.left:
+        fox.x = fox.x-step
+        if fox.x <0:
+            fox.x=0
+    if keyboard.right:
+        fox.x = fox.x+step
+        if fox.x >WIDTH:
+            fox.x=WIDTH
+    if keyboard.up:
+        fox.y =fox.y-step
+        if fox.y <0:
+            fox.y=0
+    if keyboard.down:
+        fox.y= fox.y+step
+        if fox.y >HEIGHT:
+            fox.y=HEIGHT
+    if keyboard.R:
+        game_over = False
+        score = 0
+        fox.x = 0
+        fox.y = 0
+        coin_speed = 1
+    for i in cars:
+        for s in i:
+            if fox.colliderect(s):
+                game_over = 1 == 1
+
+    if fox.colliderect(gate):
+        fox.x = 0
+        fox.y = 0
+        score += 1
+        coin_speed += 2
+    move_coins()
+
+def draw():
+    screen.fill('black')
+    fox.draw()
+    gate.draw()
+
+    for i in cars:
+        for k in i:
+            k.draw()
+    screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))
+    if game_over:
+        screen.fill("blue")
+        screen.draw.text("Final Score: "+ str(score), color="white", topleft=(10,10),fontsize=60)    
+                         
+pgzrun.go()
+```
+# Chapter 10 - Week 10
+
+```
+day0: Basics of Basics
+day1: Basics of Basics
+day2: Basics of Basics
+day3: Basics of Basics
+day4: Basics of Basics
+day5: Basics of Basics
+day6: Basics of Basics
+```
+
+
+## [DAY-68] Basics of Basics
+
+Shoot bullets and remove them from the list, play sound, and also level up after killing 3 snakes!
+
+
+![game-68.png](./screenshots/game-68.png "game 68 screenshot")
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+score = 0
+speed = 1
+elf = Actor("c1")
+snake = Actor("snake")
+beep = tone.create('A3', 0.5)
+
+elf.x = WIDTH/2
+elf.y = HEIGHT/2
+bullets = []
+
+def place_snake():
+    snake.x = random.randint(10,WIDTH-10)
+    snake.y = random.randint(10,HEIGHT-10)
+
+place_snake()
+
+def bullet_out_of_screen():
+    # just delete the first bullet
+    bullets.pop(0)
+
+def on_key_down(key):
+    if key == keys.SPACE:
+        b = Actor("bullet2")
+        b.x = elf.x + 5
+        b.y = elf.y
+        animate(b, pos=(WIDTH + 100, elf.y), tween='accelerate', on_finished=bullet_out_of_screen)
+        bullets.append(b)
+
+def update():
+    global game_over, speed, score, bullets
+    if keyboard.left:
+        elf.x = elf.x-speed
+    if keyboard.right:
+        elf.x = elf.x+speed
+    if keyboard.up:
+        elf.y = elf.y-speed
+    if keyboard.down:
+        elf.y= elf.y+speed
+    if keyboard.R:
+        speed = 1
+        score = 0
+        elf.image = "c1"
+        bullets = []
+
+    for b in bullets:
+        if b.colliderect(snake):
+            score += 1
+            speed += 1
+            if score == 3:
+                elf.image = "c2"
+            beep.play()
+            place_snake()
+
+def draw():
+    screen.fill('black')
+    elf.draw()
+    snake.draw()
+    for b in bullets:
+        b.draw()
+
+    screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))
+
+pgzrun.go()
+```
+
+You see how we are adding, bullets to a list every time you press 'space'. Now the problem is we need to clean up that list at some point, otherwise it will grow a lot, and every time we do `for b in bullets` it will bet slower and slower. Computers can only do so many things per second.
+
+So when the animation finishes, it will call `bullets_out_of_screen`, and from there we just say `bullets.pop(0)` which will remove the first element in the list of bullets, which is the oldest bullet. So if you press space 5 times, the list will have 5 items, and each of them will finish and will remove the first element.
+
+Lets say you pressed space 3 times, and shot 3 bullets, so the list, and how the bullets are traveling kindof looks like this:
+
+```
+0 -> bbbbbbbbbbbbbb
+1 -> bbbbbbb
+2 -> bbbb
+```
+
+So you see when 0 finishes because it is the oldest, when it does bullets.pop(0), it will actually delete itself.
+
+pretty cool!
+
+## [DAY-69] Basics of Basics
+
+![game-69.png](./screenshots/game-69.png "game 69 screenshot")
+
+Multiplayer!
+
+```
+import pgzrun
+import socket
+import threading
+import sys
+
+HEIGHT = 200
+WIDTH = 200
+MULTIPLAYER_PORT = 5025
+OTHER_COMPUTER_IP = "192.168.0.10"
+
+speed = 4
+me = Actor("c1")
+other = Actor("c2")
+
+me.x = WIDTH/2
+me.y = HEIGHT/2
+
+socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+socket.bind(("0.0.0.0", MULTIPLAYER_PORT))
+
+data = None
+def multiplayer():
+    global data
+    while True:
+        data, addr = socket.recvfrom(1024)
+
+def update():
+    if data != None:
+        message = data.decode("utf8")
+        (x,y) = message.split(":")
+
+        other.x = float(x)
+        other.y = float(y)
+
+
+def on_key_down(key):
+    if key == keys.LEFT:
+        me.x = me.x-speed
+    if key == keys.RIGHT:
+        me.x = me.x+speed
+    if key == keys.UP:
+        me.y = me.y-speed
+    if key == keys.DOWN:
+        me.y= me.y+speed
+
+    if key == keys.Q:
+        sys.exit(0)
+
+    message = bytearray(str(me.x) + ':' + str(me.y),"utf8")
+    socket.sendto(message, (OTHER_COMPUTER_IP, MULTIPLAYER_PORT))
+
+def draw():
+    screen.fill('black')
+    me.draw()
+    other.draw()
+
+
+threading.Thread(target=multiplayer).start()
+
+pgzrun.go()
+```
+
+There are two important parts here, first is the `socket` and then the `Thread`. For now we will leave them a mystery. But basically every time you press the UP/DOWN/LEFT/RIGHT key your computer sends a message "currentX:currentY" to the other computer, and when the other computer receives it, it stores it in the global `data` variable, then in the `update` function it splits the message by `:` and extract the `x` and `y` and sets it to the `other` actor.
+
+The `multiplayer()` function runs in a separate thread, or you can think of a separate process, so we are doing two things in the same time, the game loop (which is one `while True`) and the multiplayer loop which is also `while True`.
+
+
+## [DAY-70] Basics of Basics
+
+print numbers in a list
+
+```
+data = [1,2,3,4,5]
+for item in data:
+    print(e)
+```
+
+
+```
+list_of_lists = [[1,2,3,4,5], [1,2,3], [4,5,6]]
+for l in list_of_lists:
+    for item in l:
+        print(item)
+```
+
+
+```
+list_of_list_of_lists = [[[1,2,3,4,5], [1,2,3], [4,5,6]], [[1,2,3,4,5], [1,2,3], [4,5,6]]]
+for list_of_lists in list_of_list_of_lists:
+    for l in list_of_lists:
+        for item in l:
+            print(item)
+```
+
+
+```
+list_of_list_of_list_of_lists = [
+    [
+        [
+            [1,2,3,4,5],
+            [1,2,3],
+            [4,5,6]
+        ],
+        [
+            [1,2,3,4,5],
+            [1,2,3],
+            [4,5,6]
+        ]
+    ],
+    [
+        [
+            [1,2,3,4,5],
+            [1,2,3],
+            [4,5,6]
+        ],
+        [
+            [1,2,3,4,5],
+            [1,2,3],
+            [4,5,6]
+        ]
+    ],
+]
+
+for list_of_list_of_lists in list_of_list_of_list_of_lists:
+    for list_of_lists in list_of_list_of_lists:
+        for l in list_of_lists:
+            for item in l:
+                print(item)
+```
+
+
+```
+def sum(x):
+    r = 0
+    for item in x:
+        r += item
+    return r
+
+data = [1,2,3,4,5]
+print(sum(data))
+```
+
+
+```
+def sum(x):
+    r = 0
+    for l in x:
+        for item in l:
+            r += item
+    return r
+
+data = [[1,2,3,4,5], [1,2,3,4,5]]
+print(sum(data))
+```
+
+## [DAY-71] Basics of Basics
+make a calculator
+
+```
+while True:
+    n1 = int(input("number 1: "))
+    n2 = int(input("number 2: "))
+    op = input("operation +/-* : ")
+    r = 0
+
+    if op == "quit":
+        break
+    elif op == "+":
+        r = n1 + n2
+    elif op == "-":
+        r = n1 - n2
+    elif op == "*":
+        r = n1 * n2
+    else:
+        print("i dont know " + op)
+        continue
+
+    print(n1, op, n2, '=',r)
+
+```
+
+sum numbers from input
+
+```
+def sum(x):
+    r = 0
+    for item in x:
+        r += item
+    return r
+
+x = []
+while True:
+    k = input("enter number: ")
+    x.append(int(k))
+    print(x)
+    print(sum(x))
+
+```
+## [DAY-72] Basics of Basics
+
+Reading code is even more important than writing it, and it is more difficult than reading a book, because the story does not develop top to bottom. You have to see the important pieces, and how they are linked together. Where are things assigned and changed and how are those pieces related. For example in the touch typing program, you have a couple of functions, you can study them on their own, and know what they do, and then see how they are used and make sense of the whole program, without even running it.
+
+We will go over a couple of programs we wrote before, the rock paper scissors game, the bullet shooting game, and one of the touch typing programs.
+
+![day-72-0.jpg](./reading/day-72-0.jpg "day 72 example 0")
+
+![day-72-1.jpg](./reading/day-72-1.jpg "day 72 example 1")
+
+![day-72-2.jpg](./reading/day-72-2.jpg "day 72 example 2")
+
+
+Those are just examples, you have to print the programs and go over them with your parent.
+
+## [DAY-73] Basics of Basics
+
+More reading today, those are a couple of examples from the earlier days, the love tester, the fight function from the text game, the hangman game and first touch typing program.
+
+
+![day-73-0.jpg](./reading/day-73-0.jpg "day 73 example 0")
+
+![day-73-1.jpg](./reading/day-73-1.jpg "day 73 example 1")
+
+![day-73-2.jpg](./reading/day-73-2.jpg "day 73 example 2")
+
+![day-73-3.jpg](./reading/day-73-3-0.jpg "day 73 example 3")
+
+Again you can use something else as well, those are just the ones I picked. Be messy with the pencil, connect things together!
+
+## [DAY-74] Basics of Basics
+
+Today its up to you what to write, my kid came up with those programs:
+
+1. Ask forever what your favorite sport is, if yours is not here use https://emojipedia.org/ to find good emojis.
+
+```
+while True:
+    k = input('what is your favorite sport: ')
+
+    if k == 'soccer':
+        print('⚽')
+    elif k ==  'hockey':
+        print('🏑')
+    elif k == 'tennis':
+        print('🎾')
+    elif k == 'volleyball':
+        print('🏐')
+    elif k == 'table tennis':
+        print('🏓')
+    elif k == 'baseball':
+        print('⚾')
+    elif k == 'basketball':
+        print('🏀')
+    elif k == 'golf':
+        print('🏌️‍♂️')
+    else:
+        print('i dont now ' +k)
+```
+
+2. and one simple, append and pop from a list.
+
+```
+k = []
+while True:
+    s = input('What are you thinking of: ')
+    if s == 'pop':
+        k.pop(0)
+    else:
+        k.append(s)
+    print(k)
+```
+
+# Chapter 11 - Week 11
+
+```
+day0: Basics of Basics
+day1: Basics of Basics
+day2: Basics of Basics
+day3: Basics of Basics
+day4: Basics of Basics
+day5: Basics of Basics
+day6: Basics of Basics
+```
+
+## [DAY-75] Basics of Basics
+
+![game-75.png](./screenshots/game-75.png "game 75 screenshot")
+
+
+Enemies come to get you, and you shoot half moons at them. pretty cool.
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+score = 0
+speed = 1
+elf = Actor("c1")
+
+beep = tone.create('A3', 0.5)
+elf.x = 10
+elf.y = HEIGHT/2
+
+game_over = False
+
+bullets = []
+enemies = []
+
+def make_enemies():
+    level = int(score / 5) + 1
+
+    duration = (5 - level)
+    if duration < 1:
+        duration = 1
+
+    for i in range(level):
+        snake = Actor("snake")    
+        snake.x = WIDTH-20
+        snake.y = random.randint(10,HEIGHT-10)
+        animate(snake, pos=(-100, snake.y), tween='accelerate', duration=duration)
+        enemies.append(snake)
+
+def bullet_out_of_screen():
+    bullets.pop(0)
+
+def on_key_down(key):
+    if key == keys.SPACE:
+        b = Actor("bullet2")
+        b.x = elf.x + 5
+        b.y = elf.y
+        animate(b, pos=(WIDTH + 100, elf.y), tween='accelerate', on_finished=bullet_out_of_screen)
+        bullets.append(b)
+
+def update():
+    global game_over, speed, score, bullets, enemies
+    if keyboard.left:
+        elf.x = elf.x-speed
+    if keyboard.right:
+        elf.x = elf.x+speed
+    if keyboard.up:
+        elf.y = elf.y-speed
+    if keyboard.down:
+        elf.y= elf.y+speed
+    if keyboard.R:
+        speed = 1
+        score = 0
+        bullets = []
+        enemies = []
+        game_over = False
+
+    hit = []
+    for b in bullets:
+        for e in enemies:
+            if b.colliderect(e):
+                hit.append(e)
+
+    if len(hit) > 0:
+        score += len(hit)
+        if speed < 4:
+            speed += 1
+        beep.play()
+        for e in hit:
+            enemies.remove(e)
+
+    for e in enemies:
+        if e.colliderect(elf):
+            game_over = True
+
+def draw():
+    if game_over:
+        screen.fill('black')
+        screen.draw.text("GAME OVER", color="white", topleft=(10,10))
+    else:
+        screen.fill('black')
+        elf.draw()
+
+        for b in bullets:
+            b.draw()
+
+        for e in enemies:
+            e.draw()
+
+        screen.draw.text("Score: "+ str(score), color="white", topleft=(10,10))
+
+
+make_enemies()
+clock.schedule_interval(make_enemies, 2)
+
+pgzrun.go()
+```
+![day-75-1.jpg](./reading/day-75-1.jpg "day 75 example 1")
+
+
+
+tic tac toe but with one character variable names
+
+```
+x = [
+        #  0    1    2     3
+        ['〰️','🅰️','🅱️','🅾️'], # 0 
+        ['🥇','〰️','〰️','〰️'], # 1
+        ['🥈','〰️','〰️','〰️'], # 2
+        ['🥉','〰️','〰️','〰️'], # 3
+        
+    ]
+
+k = '🛹'
+
+while True:
+    for i in x:
+        for s in i:
+            print(s,end=' ')
+        print('')
+
+
+    l = input(k + ": ")
+
+    if l == 'a1':
+        x[1][1]=k
+    elif l == 'a2':
+        x[2][1]=k
+    elif l == 'a3':
+        x[3][1]=k
+
+    elif l == 'b1':
+        x[1][2]=k
+    elif l == 'b2':
+        x[2][2]=k
+    elif l == 'b3':
+        x[3][2]=k
+
+    elif l == 'o1':
+        x[1][3]=k
+    elif l == 'o2':
+        x[2][3]=k
+    elif l == 'o3':
+        x[3][3]=k
+    else:
+        continue
+    
+    if k == '🛹':
+        k = '⚽'
+    else:
+        k = '🛹'
+
+```
+
+30 and back
+
+```
+for i in range(1,31):
+    print(i)
+for i in range(1,31):
+    print(30 - i)
+```
+
+football mania
+
+```
+d = 30
+while True:
+    for i in range(1,d):
+        print('⚽' * i)
+    for i in range(1,d):
+        h = (d - i)
+        print('⚽' * h)
+```
+
+## [DAY-76] Basics of Basics
+
+
+![game-76.png](./screenshots/game-76.png "game 76 screenshot")
+
+A game of tag! The elf is robin hood, running away from the king. The elf plays with WASD and the king plays with up/down/left/right.
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+speedA = 3
+speedB = 3
+
+playerA = Actor("c1")
+playerB = Actor("c2")
+
+playerA.x = 10
+playerA.y = HEIGHT - 40
+
+playerB.x = 10
+playerB.y = 40
+
+game_over = False
+
+def random_speed():
+    global speedA, speedB
+    speedA = random.randint(1,5)
+    speedB = random.randint(1,5)
+
+def on_key_down(key):
+    global game_over
+
+    # player A
+    if key == keys.A:
+        playerA.x -= speedA
+    if key == keys.D:
+        playerA.x += speedA
+    if key == keys.W:
+        playerA.y -= speedA
+    if key == keys.S:
+        playerA.y += speedA
+
+    # player B
+    if key == keys.LEFT:
+        playerB.x -= speedB
+    if key == keys.RIGHT:
+        playerB.x += speedB
+    if key == keys.UP:
+        playerB.y -= speedB
+    if key == keys.DOWN:
+        playerB.y += speedB
+
+def update():
+    global game_over
+    if playerA.colliderect(playerB):
+        game_over = True
+    
+def draw():
+    if game_over:
+        screen.fill('black')
+        screen.draw.text("GAME OVER", color="white", topleft=(10,10))
+    else:
+        screen.fill('black')
+        screen.draw.text("RUN! elf: " + str(speedA) + " king: " + str(speedB) , color="white", topleft=(10,10))
+        playerA.draw()
+        playerB.draw()
+
+clock.schedule_interval(random_speed, 2)
+
+pgzrun.go()
+```
+
+
+Basic math quiz
+
+```
+import random
+while True:
+    k = random.randint(1,13)
+    s = random.randint(1,13)
+    r = k * s
+    g = int(input('How much is '+str(k) +'*' +str(s) + ': '))
+    if g == r:
+        print('Wow nice job its CORRECT')
+    else:
+        print('wrong the answer was: ' + str(r))
+```
+
+7 days average
+
+```
+x = [1231,5123,6737,6725,6261,2664,62561]
+n = len(x)
+
+print(x)
+print(n)
+
+sum = 0
+for i in x:
+    sum += i
+
+print('sum: ' + str(sum))
+print('average: ' + str(sum/n))
+```
+
+## [DAY-77] Basics of Basics
+
+morse code translator
+
+```
+alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ','.',',']
+morse = ['.-','-...','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--','-.','---','.--.','--.-','.-.','...','-','..-','...-','.--','-..-','-.--','--..','/','.-.-.-','--..--']
+
+print(len(morse))
+print(len(alphabet))
+
+for i in range(len(alphabet)):
+    print(alphabet[i] + " -> " + morse[i])
+
+text = '.... . .-.. .-.. --- / .-- --- .-. .-.. -.. .-.-.- / - .... .. ... / .. ... / -- --- .-. ... . / -.-. --- -.. . .-.-.- / - .... . .-. . / .- .-. . / -- .- -. -.-- / -.-. --- -.. . ... --..-- / -... ..- - / - .... .. ... / --- -. . / .. ... / .--. .-. . - - -.-- / -.-. --- --- .-.. --..-- / --. --- --- -.. / .--- --- -... / - .-. .- -. ... .-.. .- - .. -. --. / .. - .-.-.-'.split(' ')
+for word in text:
+    found = False
+    for i in range(len(morse)):
+        x = morse[i]
+        if x == word:
+            print(alphabet[i], end = '')
+            found = True
+    if not found:
+        print(word , end='')
+```
+
+## [DAY-78] Basics of Basics
+
+![game-78.png](./screenshots/game-78.png "game 78 screenshot")
+
+Small modifications to the previous game, gold in the middle moves the king away, randomize the elf position every 2 seconds
+
+```
+import pgzrun
+import random
+
+HEIGHT = 200
+WIDTH = 200
+
+speedE = 3
+speedK = 3
+
+elf = Actor("c1")
+king = Actor("c2")
+gold = Actor("c3")
+
+gold.x = WIDTH/2
+gold.y = HEIGHT/2
+elf.x = 10
+elf.y = HEIGHT - 40
+king.x = 10
+king.y = 40
+
+game_over = False
+
+def random_speed():
+    global speedE, speedK
+    speedE = random.randint(3,5)
+    speedK = random.randint(2,5)
+
+def random_place():
+    elf.x = random.randint(0,WIDTH)
+    elf.y = random.randint(0,HEIGHT)
+
+def update():
+    global game_over
+
+    # elf
+    if keyboard.A:
+        elf.x -= speedE
+    if keyboard.D:
+        elf.x += speedE
+    if keyboard.W:
+        elf.y -= speedE
+    if keyboard.S:
+        elf.y += speedE
+
+    # king
+    if keyboard.left:
+        king.x -= speedK
+    if keyboard.right:
+        king.x += speedK
+    if keyboard.up:
+        king.y -= speedK
+    if keyboard.down:
+        king.y += speedK
+
+    if keyboard.SPACE:
+        elf.image = 'snake'
+        random_speed()
+
+    if keyboard.R:
+         game_over = 1==2
+         elf.x = 10
+         elf.y = HEIGHT - 40
+         king.x = 10
+         king.y = 40
+         
+    if elf.x < 0:
+        elf.x = 0
+    if elf.x > WIDTH:
+        elf.x = WIDTH
+    if elf.y < 0:
+        elf.y = 0
+    if elf.y > HEIGHT:
+        elf.y = HEIGHT
+
+
+    if king.x < 0: 
+        king.x = 0
+    if king.x > WIDTH:
+        king.x = WIDTH
+    if king.y < 0:
+        king.y = 0
+    if king.y > HEIGHT:
+        king.y = HEIGHT
+
+    if elf.colliderect(gold):
+        king.x = WIDTH
+        king.y = HEIGHT
+
+    if king.colliderect(gold):
+        game_over = True
+
+    if elf.colliderect(king):
+        game_over = True
+    
+def draw():
+    if game_over:
+        screen.fill('black')
+        screen.draw.text("GAME OVER", color="white", topleft=(10,10))
+    else:
+        screen.fill('black')
+        screen.draw.text("RUN! elf: " + str(speedE) + " king: " + str(speedK) , color="white", topleft=(10,10))
+        elf.draw()
+        king.draw()
+        gold.draw()
+
+clock.schedule_interval(random_speed, 2)
+clock.schedule_interval(random_place, 5)
+
+pgzrun.go()
+```
+
+Explanation about setting x and y to be random:
+
+![day-78-explain.png](./reading/day-78-explain.png "day 78 explain coordinates")
+
+Write a program to compute the average of a list of numbers:
+
+![day-78-a.jpg](./reading/day-78-a.jpg "day 78 average of list of numbers")
+
+Decode morse code:
+
+![day-78-c.jpg](./reading/day-78-c.jpg "day 78 decode morse code")
+
+
+
+## [DAY-79] Basics of Basics
+
+morse code agian
+
+```
+alphabet = ['a','b','c','d','e']
+morse = ['.-','-...','-.-.','...','.']
+
+
+for i in range(len(alphabet)):
+    print(alphabet[i])
+    print(morse[i])
+
+text = ['.-..','.','.-..','.-']
+
+for word in text:
+    for c in range(len(morse)):
+        if word == morse[c]:
+            print(alphabet[c])
+```
+
+## [DAY-80] Basics of Basics
+## [DAY-81] Basics of Basics
 
